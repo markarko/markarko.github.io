@@ -3,6 +3,6 @@ let home = "index.html";
 let search = "search.html";
 
 
-document.querySelector("#search").addEventListener("click", function () {
+document.querySelector("#search").addEventListener("click", () => {
     window.location.href = templatesLocation + search;
 });

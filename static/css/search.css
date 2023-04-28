@@ -2,7 +2,7 @@ html{
     height: 100%;
 }
 
-body{
+#form-container{
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -14,6 +14,7 @@ form{
     justify-content: center;
     gap: 1rem;
     width: 40%;
+    margin-bottom: 2rem;
 }
 
 form input{
@@ -22,4 +23,41 @@ form input{
 
 form button{
     flex: 1;
+}
+
+#results{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.course-container{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border: 2px solid black;
+    border-radius: 1rem;
+    width: 70%;
+    padding: 1rem;
+}
+
+.info-container {
+    flex: 1;
+    gap: 0.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.course-description {
+    flex: 3;
+}
+
+.choose-button{
+    flex: 1;
+    min-height: 2rem;
+    max-height: 3rem;
+    max-width: 5rem;
 }
