@@ -1,3 +1,8 @@
+let templatesLocation = "http://127.0.0.1:5500/templates/";
+let schedules = "schedules.html";
+
+displayChosenCourses();
+
 document.querySelector("form").addEventListener("submit", (e) => {
     e.preventDefault();
     const courseNumber = e.target.elements.coursenumber.value;
@@ -81,10 +86,46 @@ function addEventListenersToForms(){
                         alert("Course already added");
                     } else if (json.status == 201){
                         alert("Course added successfully");
+                        displayChosenCourses();
                     }
                 })
                 .catch(error => console.log(error));
             clearResults();
+        });
+    }
+}
+
+function displayChosenCourses(){
+    let parent = document.querySelector("#chosen-courses");
+    parent.innerHTML = "";
+    
+    fetch("http://localhost:8080/courses/chosen")
+        .then(response => response.json())
+        .then(json => {
+            let courses = json.data;
+
+            courses.forEach(course => {
+                let courseNumber = course.courseNumber;
+                let chosenCourse = document.createElement("div");
+                parent.appendChild(chosenCourse);
+                chosenCourse.classList.add("chosen-course");
+                chosenCourse.textContent = courseNumber;
+            });
+
+            if (courses.length > 0){
+                let generateSchedulesButton = document.createElement("button");
+                generateSchedulesButton.textContent = "Generate Schedules";
+                parent.appendChild(generateSchedulesButton);
+            }
+        })
+        .catch(error => console.log(error));
+}
+
+function addGenerateSchedulesEventListener(){
+    let generateSchedulesButton = document.querySelector("#generate-schedules");
+    if (generateSchedulesButton !== null) {
+        generateSchedulesButton.addEventListener("click", () => {
+            window.location.href = templatesLocation + schedules;
         });
     }
 }

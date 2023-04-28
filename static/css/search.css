@@ -18,6 +18,7 @@ form{
 }
 
 form input{
+    padding: 0.5rem;
     flex: 3;
 }
 
@@ -60,4 +61,17 @@ form button{
     min-height: 2rem;
     max-height: 3rem;
     max-width: 5rem;
+}
+
+#chosen-courses{
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+#chosen-courses * {
+    border: 2px solid black;
+    border-radius: 1rem;
+    padding: 1rem;
 }
