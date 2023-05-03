@@ -2,6 +2,7 @@ let templatesLocation = "http://127.0.0.1:5500/templates/";
 let schedules = "schedules.html";
 
 displayChosenCourses();
+addGenerateSchedulesEventListener();
 
 document.querySelector("form").addEventListener("submit", (e) => {
     e.preventDefault();
@@ -84,6 +85,8 @@ function addEventListenersToForms(){
                         alert("Course not found");
                     } else if (json.status == 409){
                         alert("Course already added");
+                    } else if (json.status == 400){
+                        alert("You can only choose up to 8 courses");
                     } else if (json.status == 201){
                         alert("Course added successfully");
                         displayChosenCourses();
@@ -115,7 +118,9 @@ function displayChosenCourses(){
             if (courses.length > 0){
                 let generateSchedulesButton = document.createElement("button");
                 generateSchedulesButton.textContent = "Generate Schedules";
+                generateSchedulesButton.id = "generate-schedules";
                 parent.appendChild(generateSchedulesButton);
+                addGenerateSchedulesEventListener();
             }
         })
         .catch(error => console.log(error));
@@ -123,8 +128,9 @@ function displayChosenCourses(){
 
 function addGenerateSchedulesEventListener(){
     let generateSchedulesButton = document.querySelector("#generate-schedules");
-    if (generateSchedulesButton !== null) {
+    if (generateSchedulesButton != null) {
         generateSchedulesButton.addEventListener("click", () => {
+            console.log('here');
             window.location.href = templatesLocation + schedules;
         });
     }
