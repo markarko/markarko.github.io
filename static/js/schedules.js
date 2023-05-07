@@ -64,7 +64,6 @@ function generateSchedules(){
     fetch("http://localhost:8080/schedules")
         .then(response => response.json())
         .then(json => {
-            console.log(json);
             let schedules = json.data;
             if (schedules === null){
                 return;
@@ -136,8 +135,10 @@ function generateSchedule(schedule){
         for (let singleClass of scheduleClass[courseNumber].schedules){
             let singleClassDiv = document.createElement("span");
             grid.appendChild(singleClassDiv);
-            singleClassDiv.style.gridRowStart = getRowGridPosition(timeToMinutes(singleClass.startTime)) + 1;
-            singleClassDiv.style.gridRowEnd = getRowGridPosition(timeToMinutes(singleClass.endTime)) + 1;
+            console.log(singleClass.startTime);
+            console.log(singleClass.endTime);
+            singleClassDiv.style.gridRowStart = getRowGridPosition(singleClass.startTime) + 1;
+            singleClassDiv.style.gridRowEnd = getRowGridPosition(singleClass.endTime) + 1;
             singleClassDiv.style.gridColumnStart = singleClass.dayOfWeek;
             singleClassDiv.style.gridColumnEnd = singleClass.dayOfWeek + 1;
             singleClassDiv.style.backgroundColor = classColors[classColorIndex];
@@ -186,11 +187,6 @@ function matchTableSizeToGrid(){
         grid.style.width = gridWidth + "px";
         grid.style.height = gridHeight + "px";
     }
-}
-
-function timeToMinutes(timeString){
-    const [hours, minutes, seconds] = timeString.split(":");
-    return (parseInt(hours) * 60) + parseInt(minutes);
 }
 
 function getRowGridPosition(minutes){

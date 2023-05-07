@@ -71,8 +71,8 @@ function displaySchedule(){
                     for (let singleClass of scheduleClass[courseNumber].schedules){
                         let singleClassDiv = document.createElement("span");
                         grid.appendChild(singleClassDiv);
-                        singleClassDiv.style.gridRowStart = getRowGridPosition(timeToMinutes(singleClass.startTime)) + 1;
-                        singleClassDiv.style.gridRowEnd = getRowGridPosition(timeToMinutes(singleClass.endTime)) + 1;
+                        singleClassDiv.style.gridRowStart = getRowGridPosition(singleClass.startTime) + 1;
+                        singleClassDiv.style.gridRowEnd = getRowGridPosition(singleClass.endTime) + 1;
                         singleClassDiv.style.gridColumnStart = singleClass.dayOfWeek;
                         singleClassDiv.style.gridColumnEnd = singleClass.dayOfWeek + 1;
                         singleClassDiv.style.backgroundColor = classColors[classColorIndex];
@@ -85,11 +85,6 @@ function displaySchedule(){
             }
         })
         .catch(error => console.log(error));
-}
-
-function timeToMinutes(timeString){
-    const [hours, minutes, seconds] = timeString.split(":");
-    return (parseInt(hours) * 60) + parseInt(minutes);
 }
 
 function getRowGridPosition(minutes){
