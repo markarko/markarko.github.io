@@ -80,7 +80,6 @@ function addEventListenersToForms(){
             fetch("http://localhost:8080/courses/add?course-number=" + courseNumber)
                 .then(response => response.json())
                 .then(json => {
-                    console.log(json);
                     if (json.status == 404){
                         alert("Course not found");
                     } else if (json.status == 409){
@@ -106,13 +105,11 @@ function displayChosenCourses(){
         .then(response => response.json())
         .then(json => {
             let courses = json.data;
-
+            if (courses === null){
+                return;
+            }
             courses.forEach(course => {
-                let courseNumber = course.courseNumber;
-                let chosenCourse = document.createElement("div");
-                parent.appendChild(chosenCourse);
-                chosenCourse.classList.add("chosen-course");
-                chosenCourse.textContent = courseNumber;
+                displayChosenCourse(course, parent);
             });
 
             if (courses.length > 0){
@@ -124,6 +121,39 @@ function displayChosenCourses(){
             }
         })
         .catch(error => console.log(error));
+}
+
+function displayChosenCourse(course, parent){
+    let courseNumber = course.courseNumber;
+    let chosenCourseForm = document.createElement("form");
+    chosenCourseForm.classList.add("chosen-course");
+
+
+    let chosenCourse = document.createElement("div");
+    chosenCourseForm.appendChild(chosenCourse);
+    parent.appendChild(chosenCourseForm);
+    
+    chosenCourse.textContent = courseNumber;
+    let removeButton = document.createElement("button");
+    chosenCourseForm.appendChild(removeButton);
+    removeButton.type = "submit";
+    removeButton.textContent = "X";
+    chosenCourseForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        fetch("http://localhost:8080/courses/remove?course-number=" + courseNumber)
+            .then(response => response.json())
+            .then(json => {
+                if (json.status === 202){
+                    alert("Course removed successfully");
+                    displayChosenCourses();
+                } else if (json.status === 404){
+                    alert("Course not found");
+                } else if (json.status === 409){
+                    alert("Course not chosen");
+                }
+            })
+            .catch(error => console.log(error));
+    });
 }
 
 function addGenerateSchedulesEventListener(){

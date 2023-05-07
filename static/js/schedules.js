@@ -1,16 +1,22 @@
+let templatesLocation = "http://127.0.0.1:5500/templates/";
+let scheduleTemplate = "schedule.html";
+
 displayChosenCourses();
-generateSchedules()
 
 let classColors = ["red", "blue", "green", "orange", "purple", "pink", "brown", "gray"];
 
 function displayChosenCourses(){
     let parent = document.querySelector("#chosen-courses");
     parent.innerHTML = "";
+    generateSchedules();
     
     fetch("http://localhost:8080/courses/chosen")
         .then(response => response.json())
         .then(json => {
             let courses = json.data;
+            if (courses === null){
+                return;
+            }
             courses.forEach(course => {
                 displayChosenCourse(course, parent);
             });
@@ -20,17 +26,49 @@ function displayChosenCourses(){
 
 function displayChosenCourse(course, parent){
     let courseNumber = course.courseNumber;
+    let chosenCourseForm = document.createElement("form");
+    chosenCourseForm.classList.add("chosen-course");
+
     let chosenCourse = document.createElement("div");
-    parent.appendChild(chosenCourse);
-    chosenCourse.classList.add("chosen-course");
+    chosenCourseForm.appendChild(chosenCourse);
+    parent.appendChild(chosenCourseForm);
+    
     chosenCourse.textContent = courseNumber;
+    let removeButton = document.createElement("button");
+    chosenCourseForm.appendChild(removeButton);
+    removeButton.type = "submit";
+    removeButton.textContent = "X";
+    chosenCourseForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        fetch("http://localhost:8080/courses/remove?course-number=" + courseNumber)
+            .then(response => response.json())
+            .then(json => {
+                //console.log(json);
+                if (json.status === 202){
+                    alert("Course removed successfully");
+                    displayChosenCourses();
+                } else if (json.status === 404){
+                    alert("Course not found");
+                } else if (json.status === 409){
+                    alert("Course not chosen");
+                }
+            })
+            .catch(error => console.log(error));
+    });
 }
 
 function generateSchedules(){
-    fetch("http://localhost:8080/courses/schedules")
+    let parent = document.querySelector("#schedules");
+    parent.innerHTML = "";
+
+    fetch("http://localhost:8080/schedules")
         .then(response => response.json())
         .then(json => {
+            console.log(json);
             let schedules = json.data;
+            if (schedules === null){
+                return;
+            }
             schedules.forEach(schedule => {
                 generateSchedule(schedule);
             });
@@ -39,7 +77,6 @@ function generateSchedules(){
 }
 
 function generateSchedule(schedule){
-    console.log(schedule);
     let parent = document.querySelector("#schedules");
     
     let numRows = 33;
@@ -115,7 +152,7 @@ function generateSchedule(schedule){
     scheduleInfo.addEventListener("submit", (e) => {
         e.preventDefault();
         let scheduleInput = scheduleInfo.querySelector("input[type='hidden']").value;
-        fetch("http://localhost:8080/courses/schedules/add", {
+        fetch("http://localhost:8080/schedules/add", {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -125,9 +162,9 @@ function generateSchedule(schedule){
             .then(response => response.json())
             .then(json => {
                 if (json.status === 201){
-                    window.location.href = "http://localhost:8080/courses/schedule";
+                    window.location.href = templatesLocation + scheduleTemplate;
                 } else {
-                    alert("Error: " + json.message);
+                    alert("Couldn't add this schedule, wrong json format");
                 }
             })
             .catch(error => console.log(error));
