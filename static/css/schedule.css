@@ -23,8 +23,8 @@
 
 .grid{
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: repeat(33, 1fr);
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(30, 1fr);
     width: 70rem;
     height: 50rem;
     position: absolute;

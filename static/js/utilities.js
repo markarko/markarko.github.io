@@ -268,8 +268,8 @@ export function displaySchedule(){
                 grid.appendChild(singleClassDiv);
                 singleClassDiv.style.gridRowStart = getRowGridPosition(singleClass.startTime) + 1;
                 singleClassDiv.style.gridRowEnd = getRowGridPosition(singleClass.endTime) + 1;
-                singleClassDiv.style.gridColumnStart = singleClass.dayOfWeek;
-                singleClassDiv.style.gridColumnEnd = singleClass.dayOfWeek + 1;
+                singleClassDiv.style.gridColumnStart = singleClass.dayOfWeek + 1;
+                singleClassDiv.style.gridColumnEnd = singleClass.dayOfWeek + 2;
                 singleClassDiv.style.backgroundColor = classColors[classColorIndex];
                 singleClassDiv.style.border = "2px solid black";
                 singleClassDiv.innerText = courseNumber + "\nSection " + section;
@@ -283,8 +283,10 @@ export function displaySchedule(){
 function createScheduleTable(){
     let parent = document.querySelector("#schedule");
     
-    let numRows = 33;
-    let numCols = 7;
+    let classesStartTime = 7 * 60;
+
+    let numRows = 30;
+    let numCols = 8;
 
     let grid = document.createElement("div");
     grid.classList.add("grid");
@@ -304,8 +306,18 @@ function createScheduleTable(){
         for (let j = 0; j < numCols; j++){
             let cell = document.createElement("td");
             row.appendChild(cell);
-            if (i === 0){
-                cell.textContent = days[j];
+
+            if (j === 0 && i !== 0){
+                let time = document.createElement("div");
+                let startTime = (Math.floor(classesStartTime / 60)) + ":" + (classesStartTime % 60 === 0 ? "00" : classesStartTime % 60);
+                classesStartTime += 30;
+                let endTime = (Math.floor(classesStartTime / 60)) + ":" + (classesStartTime % 60 === 0 ? "00" : classesStartTime % 60);
+                time.textContent = startTime + " - " + endTime;
+                cell.appendChild(time);
+            }
+            
+            if (i === 0 && j !== 0){
+                cell.textContent = days[j-1];
             }
         }
         tableBody.appendChild(row);
