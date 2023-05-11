@@ -68,3 +68,18 @@ td {
     font-weight: bold;
     font-size: 1.25rem;
 }
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+nav a {
+    text-decoration: none;
+    color: black;
+    border: 2px solid black;
+    border-radius: 1rem;
+    padding: 0.5rem;
+}
