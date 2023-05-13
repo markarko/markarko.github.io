@@ -223,8 +223,15 @@ export function createCourseContainer(course){
 
     let sectionInput = document.createElement("input");
     sectionInput.type = "checkbox";
-    sectionInput.value = "all";
+    sectionInput.value = -1;
     sectionContainer.appendChild(sectionInput);
+
+    sectionInput.addEventListener("change", (e) => {
+        let checkboxes = sections.querySelectorAll("input[type='checkbox']");
+        for (let checkbox of checkboxes){
+            checkbox.checked = e.target.checked;
+        }
+    });
 
     for (let section of course.sections){
         sectionContainer = document.createElement("li");
@@ -235,6 +242,19 @@ export function createCourseContainer(course){
         sectionInput.type = "checkbox";
         sectionInput.value = section.section;
         sectionContainer.appendChild(sectionInput);
+
+        sectionInput.addEventListener("change", (e) => {
+            let checkboxes = sections.querySelectorAll("input[type='checkbox']");
+            let allChecked = true;
+            for (let i = 1; i < checkboxes.length; i++){
+                let checkbox = checkboxes[i];
+                if (!checkbox.checked){
+                    allChecked = false;
+                    break;
+                }
+            }
+            sections.querySelector("input[type='checkbox']").checked = allChecked;
+        });
     }
     
     sectionsContainer.getElementsByClassName('anchor')[0].onclick = function(evt) {
@@ -263,18 +283,38 @@ export function addEventListenersToForms(){
         form.addEventListener("submit", (e) => {
             e.preventDefault();
             let courseNumber = form.querySelector("#course-number").value;
-            fetch("http://localhost:8080/courses/add?course-number=" + courseNumber)
+
+            let sections = [];
+            let sectionInputs = form.querySelectorAll("input[type='checkbox']");
+            for (let sectionInput of sectionInputs){
+                if (sectionInput.checked){
+                    sections.push(sectionInput.value);
+                }
+            }
+            
+            if (sections.length == 0){
+                alert("You must choose at least one section");
+                return;
+            }
+
+            let chosenCourse = {};
+            chosenCourse[courseNumber] = sections;
+            console.log(chosenCourse);
+
+            fetch("http://localhost:8080/courses/add", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(chosenCourse)
+            })
                 .then(response => response.json())
                 .then(json => {
-                    if (json.status == 404){
-                        alert("Course not found");
-                    } else if (json.status == 409){
-                        alert("Course already added");
-                    } else if (json.status == 400){
-                        alert("You can only choose up to 8 courses");
-                    } else if (json.status == 201){
+                    if (json.status == 201){
                         alert("Course added successfully");
                         displayChosenCourses();
+                    } else {
+                        alert(json.error);
                     }
                 })
                 .catch(error => console.log(error));
