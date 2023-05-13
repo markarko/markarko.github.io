@@ -1,0 +1,85 @@
+body {
+    padding: 2rem;
+}
+
+#chosen-courses{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.chosen-course {
+    border: 2px solid black;
+    border-radius: 1rem;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.grid{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(33, 1fr);
+    position: absolute;
+}
+
+table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+}
+
+td {
+    border: 1px solid black;    
+    width: 1.5rem;
+    height: 1rem;
+    text-align: center;
+}
+
+#schedules {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+#schedules * {
+    flex: 0 0 11rem;
+} 
+
+.schedule-info {
+    display: flex;
+    flex-direction: column; 
+    white-space: nowrap;
+}
+
+.schedule-info * {
+    text-align: center;
+    max-height: 3rem;
+}
+
+.single-class {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+nav a {
+    text-decoration: none;
+    color: black;
+    border: 2px solid black;
+    border-radius: 1rem;
+    padding: 0.5rem;
+}
