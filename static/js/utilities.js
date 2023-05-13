@@ -202,14 +202,47 @@ export function createCourseContainer(course){
     courseTitle.textContent = course.courseTitle;
     infoContainer.appendChild(courseTitle);
 
-    let sections = document.createElement("select");
-    for (let section of course.sections){
-        let option = document.createElement("option");
-        option.textContent = section.section;
-        sections.appendChild(option);
-    }
+    let sectionsContainer = document.createElement("div");
+    sectionsContainer.classList.add("dropdown-check-list");
+    sectionsContainer.tabIndex = "100";
+    infoContainer.appendChild(sectionsContainer);
 
-    infoContainer.appendChild(sections);
+    let anchor = document.createElement("span");
+    anchor.classList.add("anchor");
+    anchor.textContent = "Sections";
+    sectionsContainer.appendChild(anchor);
+
+    let sections = document.createElement("ul");
+    sections.style.width = (anchor.offsetWidth - 5) + "px";
+    sections.classList.add("items");
+    sectionsContainer.appendChild(sections);
+
+    let sectionContainer = document.createElement("li");
+    sectionContainer.textContent = "All";
+    sections.appendChild(sectionContainer);
+
+    let sectionInput = document.createElement("input");
+    sectionInput.type = "checkbox";
+    sectionInput.value = "all";
+    sectionContainer.appendChild(sectionInput);
+
+    for (let section of course.sections){
+        sectionContainer = document.createElement("li");
+        sectionContainer.textContent = section.section;
+        sections.appendChild(sectionContainer);
+
+        sectionInput = document.createElement("input");
+        sectionInput.type = "checkbox";
+        sectionInput.value = section.section;
+        sectionContainer.appendChild(sectionInput);
+    }
+    
+    sectionsContainer.getElementsByClassName('anchor')[0].onclick = function(evt) {
+    if (sectionsContainer.classList.contains('visible')){
+        sectionsContainer.classList.remove('visible');
+    } else{
+        sectionsContainer.classList.add('visible');
+    }}
 
     let courseDescription = document.createElement("div");
     courseDescription.textContent = course.courseDescription;
