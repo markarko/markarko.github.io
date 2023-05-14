@@ -1,11 +1,77 @@
 html{
     height: 100%;
+    background-color: #0b1a30;
 }
 
 body{
+    margin: 0;
+}
+
+#chosen-courses{
     display: flex;
     justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.chosen-course {
+    color: #58b7a9;
+    border: 2px solid #58b7a9;
+    border-radius: 1rem;
+    padding: 1rem;
+    display: flex;
     align-items: center;
-    flex-direction: column;
-    height: 100%;
+    gap: 0.5rem;
+    margin: 0;
+}
+
+.chosen-course div {
+    white-space: nowrap;
+}
+
+.chosen-course button {
+    background-color: #0b1a30;
+    border-style: none;
+    color: #58b7a9;
+    font-size: 1.1rem;
+    border: 2px solid #58b7a9;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+#generate-schedules{
+    background-color: #0b1a30;
+    border-style: none;
+    color: #58b7a9;
+    border: 2px solid #58b7a9;
+    border-radius: 1rem;
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+#chosen-courses > *{
+    flex: 0 0 8rem;
+}
+
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: #192b47;
+}
+
+nav a {
+    text-decoration: none;
+    color: #58b7a9;
+    border: 2px solid #58b7a9;
+    border-radius: 1rem;
+    padding: 0.5rem;
+    font-size: 1.5rem;
+}
+
+*{
+    font-family: 'Roboto Mono', monospace;
 }

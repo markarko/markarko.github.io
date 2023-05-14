@@ -1,18 +1,5 @@
-#chosen-courses{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
-
-.chosen-course {
-    border: 2px solid black;
-    border-radius: 1rem;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+body{
+    padding-bottom: 2rem;
 }
 
 #schedule{
@@ -35,12 +22,14 @@ table {
     table-layout: fixed;
     width: 70rem;
     height: 50rem;
+    color: #58b7a9;
 }
 
 td {
-    border: 1px solid black;    
+    border: 1px solid lightgray;    
     height: 1.25rem;
     text-align: center;
+    color: lightgray;
 }
 
 .single-class {
@@ -50,19 +39,5 @@ td {
     color: white;
     font-weight: bold;
     font-size: 1.25rem;
-}
-
-nav {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin: 2rem;
-}
-
-nav a {
-    text-decoration: none;
-    color: black;
-    border: 2px solid black;
-    border-radius: 1rem;
-    padding: 0.5rem;
+    border: 1px solid lightgray;
 }

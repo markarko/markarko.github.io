@@ -1,5 +1,20 @@
-html{
-    height: 100%;
+#coursenumber{
+    color: #58b7a9; 
+    background-color: #0b1a30;
+    border: 2px solid #58b7a9;
+    font-size: 1.25rem;
+}
+
+#search-button{
+    background-color: #0b1a30;
+    color: #58b7a9;
+    border-style: none;
+    border: 2px solid #58b7a9;
+    font-size: 1.25rem;
+}
+
+#search-button:hover{
+    cursor: pointer;
 }
 
 #form-container{
@@ -37,10 +52,11 @@ form button{
     display: flex;
     align-items: center;
     gap: 1rem;
-    border: 2px solid black;
     border-radius: 1rem;
     width: 70%;
     padding: 1rem;
+    color: #6ad6c6;
+    background-color: #192b47;
 }
 
 .info-container {
@@ -61,44 +77,16 @@ form button{
     min-height: 2rem;
     max-height: 3rem;
     max-width: 5rem;
+    background-color: #192b47;
+    color: #58b7a9;
+    border-style: none;
+    border: 2px solid #58b7a9;
 }
 
-#chosen-courses{
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
+.choose-button:hover{
+    cursor: pointer;
 }
 
-.chosen-course {
-    border: 2px solid black;
-    border-radius: 1rem;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin: 0;
-}
-
-#chosen-courses > *{
-    flex: 0 0 8rem;
-}
-
-
-nav {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin: 2rem;
-}
-
-nav a {
-    text-decoration: none;
-    color: black;
-    border: 2px solid black;
-    border-radius: 1rem;
-    padding: 0.5rem;
-}
 
 .dropdown-check-list {
     display: inline-block;
@@ -147,11 +135,8 @@ nav a {
     list-style: none;
 }
   
-.dropdown-check-list.visible .anchor {
-    color: #0094ff;
-}
-  
 .dropdown-check-list.visible .items {
     display: block;
-    background-color: white;
+    background-color: #192b47;
+    text-align: center;
 }

@@ -22,7 +22,7 @@ export function displayChosenCourses(addGenerateSchedulesButton = true){
 
             if (addGenerateSchedulesButton && courses.length > 0){
                 let generateSchedulesButton = document.createElement("button");
-                generateSchedulesButton.textContent = "Generate Schedules";
+                generateSchedulesButton.textContent = "Generate";
                 generateSchedulesButton.id = "generate-schedules";
                 parent.appendChild(generateSchedulesButton);
                 addGenerateSchedulesEventListener();
@@ -60,7 +60,6 @@ export function displayChosenCourse(course, parent){
             .then(response => response.json())
             .then(json => {
                 if (json.status === 202){
-                    alert("Course removed successfully");
                     window.location.href = templatesLocation + searchTemplate;
                 } else if (json.status === 404){
                     alert("Course not found");
@@ -96,9 +95,14 @@ export function generateSchedule(schedule){
     let numRows = 33;
     let numCols = 7;
     
+    let scheduleContainer = document.createElement("div");
+    parent.appendChild(scheduleContainer);
+    scheduleContainer.style.display = "flex";
+    scheduleContainer.style.gap = "1rem";
+
     let gridAndTableContainer = document.createElement("div");
     gridAndTableContainer.classList.add("grid-and-table-container");
-    parent.appendChild(gridAndTableContainer);
+    scheduleContainer.appendChild(gridAndTableContainer);
 
     let grid = document.createElement("div");
     grid.classList.add("grid");
@@ -130,7 +134,7 @@ export function generateSchedule(schedule){
 
     let scheduleInfo = document.createElement("form");
     scheduleInfo.classList.add("schedule-info");
-    parent.appendChild(scheduleInfo);
+    scheduleContainer.appendChild(scheduleInfo);
 
     let scheduleInput = document.createElement("input");
     scheduleInput.type = "hidden";
@@ -155,7 +159,6 @@ export function generateSchedule(schedule){
             singleClassDiv.style.gridColumnStart = singleClass.dayOfWeek;
             singleClassDiv.style.gridColumnEnd = singleClass.dayOfWeek + 1;
             singleClassDiv.style.backgroundColor = classColors[classColorIndex];
-            singleClassDiv.style.border = "2px solid black";
             singleClassDiv.textContent = classColorIndex+1;
             singleClassDiv.classList.add("single-class");
         }
@@ -173,6 +176,7 @@ export function generateSchedule(schedule){
     });
     chooseScheduleButton.type = "submit";
     chooseScheduleButton.textContent = "Choose";
+    chooseScheduleButton.classList.add("choose-schedule-button");
     scheduleInfo.appendChild(chooseScheduleButton);
 
     matchTableSizeToGrid();
@@ -311,7 +315,6 @@ export function addEventListenersToForms(){
                 .then(response => response.json())
                 .then(json => {
                     if (json.status == 201){
-                        alert("Course added successfully");
                         displayChosenCourses();
                     } else {
                         alert(json.error);
@@ -344,7 +347,6 @@ export function displaySchedule(){
                 singleClassDiv.style.gridColumnStart = singleClass.dayOfWeek + 1;
                 singleClassDiv.style.gridColumnEnd = singleClass.dayOfWeek + 2;
                 singleClassDiv.style.backgroundColor = classColors[classColorIndex];
-                singleClassDiv.style.border = "2px solid black";
                 singleClassDiv.innerText = courseNumber + "\nSection " + section;
                 singleClassDiv.classList.add("single-class");
             }
@@ -395,7 +397,7 @@ function createScheduleTable(){
         }
         tableBody.appendChild(row);
     }   
-    grid.style.height = grid.parentElement.offsetHeight;
+    grid.style.height = grid.parentElement.offsetHeight + "px";
 }
 
 export function matchTableSizeToGrid(){
