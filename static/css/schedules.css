@@ -13,16 +13,22 @@ table {
 }
 
 td {
-    border: 1px solid #58b7a9;
+    border: 1px solid lightgray;
     width: 1.5rem;
-    height: 1rem;
+    height: 1rem;   
     text-align: center;
+}
+
+table tr:first-child{
+    font-size: 0.75rem;
+    color: lightgray;
 }
 
 #schedules {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 3rem;
+    margin: 0 3rem 0 3rem;
 }
 
 #schedules * {
@@ -47,4 +53,14 @@ td {
     color: white;
     font-weight: bold;
     font-size: 1.25rem;
+    border: 1px solid lightgray;
+}
+
+.choose-schedule-button{
+    background-color: #0b1a30;
+    border-style: none;
+    cursor: pointer;
+    color: #58b7a9;
+    border: 2px solid #58b7a9;
+    border-radius: 1rem;
 }

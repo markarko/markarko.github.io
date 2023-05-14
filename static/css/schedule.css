@@ -1,3 +1,7 @@
+body{
+    padding-bottom: 2rem;
+}
+
 #schedule{
     width: 70rem;
     height: 50rem;
@@ -22,9 +26,10 @@ table {
 }
 
 td {
-    border: 1px solid #58b7a9;    
+    border: 1px solid lightgray;    
     height: 1.25rem;
     text-align: center;
+    color: lightgray;
 }
 
 .single-class {
@@ -34,4 +39,5 @@ td {
     color: white;
     font-weight: bold;
     font-size: 1.25rem;
+    border: 1px solid lightgray;
 }
