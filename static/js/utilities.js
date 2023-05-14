@@ -22,7 +22,7 @@ export function displayChosenCourses(addGenerateSchedulesButton = true){
 
             if (addGenerateSchedulesButton && courses.length > 0){
                 let generateSchedulesButton = document.createElement("button");
-                generateSchedulesButton.textContent = "Generate Schedules";
+                generateSchedulesButton.textContent = "Generate";
                 generateSchedulesButton.id = "generate-schedules";
                 parent.appendChild(generateSchedulesButton);
                 addGenerateSchedulesEventListener();
