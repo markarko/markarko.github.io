@@ -9,7 +9,7 @@ export function displayChosenCourses(addGenerateSchedulesButton = true){
     let parent = document.querySelector("#chosen-courses");
     parent.innerHTML = "";
     
-    fetch("http://localhost:8080/courses/chosen")
+    fetch("http://4.206.216.61:8000/api/courses/chosen")
         .then(response => response.json())
         .then(json => {
             let courses = json.data;
@@ -56,7 +56,7 @@ export function displayChosenCourse(course, parent){
     removeButton.textContent = "X";
     chosenCourseForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        fetch("http://localhost:8080/courses/remove?course-number=" + courseNumber)
+        fetch("http://4.206.216.61:8000/api/courses/remove?course-number=" + courseNumber)
             .then(response => response.json())
             .then(json => {
                 if (json.status === 202){
@@ -75,7 +75,7 @@ export function generateSchedules(){
     let parent = document.querySelector("#schedules");
     parent.innerHTML = "";
 
-    fetch("http://localhost:8080/schedules")
+    fetch("http://4.206.216.61:8000/api/schedules")
         .then(response => response.json())
         .then(json => {
             let schedules = json.data;
@@ -305,7 +305,7 @@ export function addEventListenersToForms(){
             chosenCourse[courseNumber] = sections;
             console.log(chosenCourse);
 
-            fetch("http://localhost:8080/courses/add", {
+            fetch("http://4.206.216.61:8000/api/courses/add", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
