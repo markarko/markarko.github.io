@@ -10,10 +10,14 @@ document.querySelector("form").addEventListener("submit", (e) => {
         .then(response => response.json())
         .then(json => {
             clearResults();
-            json.data.forEach(course => {
-                createCourseContainer(course);
-            });
-            addEventListenersToForms();  
+            if (json.status === 200 || json.status === "OK"){
+                json.data.forEach(course => {
+                    createCourseContainer(course);
+                });
+                addEventListenersToForms();  
+            } else {
+                document.querySelector("#message").textContent = json.error;
+            }
         })
         .catch(error => console.log(error));
 });
