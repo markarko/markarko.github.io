@@ -6,7 +6,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
     e.preventDefault();
     document.querySelector("#message").textContent = "";
     const courseNumber = e.target.elements.coursenumber.value;
-    fetch("http://localhost:8000/scheduler/courses?course-number=" + courseNumber)
+    fetch("https://api.markarko.me/scheduler/courses?course-number=" + courseNumber)
         .then(response => response.json())
         .then(json => {
             clearResults();

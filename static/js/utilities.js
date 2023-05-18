@@ -1,4 +1,4 @@
-let templatesLocation = "http://127.0.0.1:5500/templates/";
+let templatesLocation = "https://api.markarko.me/templates/";
 let searchTemplate = "search.html";
 let schedulesTemplate = "schedules.html";
 let scheduleTemplate = "schedule.html";
@@ -83,7 +83,7 @@ export function generateSchedules(){
 
     console.log(localStorage.getItem("chosenCourses"));
 
-    fetch("http://localhost:8000/scheduler/schedules", {
+    fetch("https://api.markarko.me/scheduler/schedules", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
