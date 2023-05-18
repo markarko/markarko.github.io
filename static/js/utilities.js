@@ -1,4 +1,4 @@
-let templatesLocation = "https://api.markarko.me/templates/";
+let templatesLocation = "https://markarko.me/templates/";
 let searchTemplate = "search.html";
 let schedulesTemplate = "schedules.html";
 let scheduleTemplate = "schedule.html";
