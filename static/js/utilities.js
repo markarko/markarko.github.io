@@ -1,4 +1,4 @@
-let templatesLocation = "https://markarko.me/templates/";
+let templatesLocation = "http://127.0.0.1:5500/templates/";
 let searchTemplate = "search.html";
 let schedulesTemplate = "schedules.html";
 let scheduleTemplate = "schedule.html";
@@ -9,26 +9,22 @@ export function displayChosenCourses(addGenerateSchedulesButton = true){
     let parent = document.querySelector("#chosen-courses");
     parent.innerHTML = "";
     
-    fetch("https://api.markarko.me/api/courses/chosen")
-        .then(response => response.json())
-        .then(json => {
-            let courses = json.data;
-            if (courses === null){
-                return;
-            }
-            courses.forEach(course => {
-                displayChosenCourse(course, parent);
-            });
+    let courses = localStorage.getItem("chosenCourses");
+    if (courses === null){
+        return;
+    }
+    courses = JSON.parse(courses);
+    courses.forEach(course => {
+        displayChosenCourse(course, parent);
+    });
 
-            if (addGenerateSchedulesButton && courses.length > 0){
-                let generateSchedulesButton = document.createElement("button");
-                generateSchedulesButton.textContent = "Generate";
-                generateSchedulesButton.id = "generate-schedules";
-                parent.appendChild(generateSchedulesButton);
-                addGenerateSchedulesEventListener();
-            }
-        })
-        .catch(error => console.log(error));
+    if (addGenerateSchedulesButton && courses.length > 0){
+        let generateSchedulesButton = document.createElement("button");
+        generateSchedulesButton.textContent = "Generate";
+        generateSchedulesButton.id = "generate-schedules";
+        parent.appendChild(generateSchedulesButton);
+        addGenerateSchedulesEventListener();
+    }
 }
 
 function addGenerateSchedulesEventListener(){
@@ -41,7 +37,7 @@ function addGenerateSchedulesEventListener(){
 }
 
 export function displayChosenCourse(course, parent){
-    let courseNumber = course.courseNumber;
+    let courseNumber = Object.keys(course)[0];
     let chosenCourseForm = document.createElement("form");
     chosenCourseForm.classList.add("chosen-course");
 
@@ -56,35 +52,57 @@ export function displayChosenCourse(course, parent){
     removeButton.textContent = "X";
     chosenCourseForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        fetch("https://api.markarko.me/api/courses/remove?course-number=" + courseNumber)
-            .then(response => response.json())
-            .then(json => {
-                if (json.status === 202){
-                    window.location.href = templatesLocation + searchTemplate;
-                } else if (json.status === 404){
-                    alert("Course not found");
-                } else if (json.status === 409){
-                    alert("Course not chosen");
-                }
-            })
-            .catch(error => console.log(error));
+        removeChosenCourse(courseNumber);
     });
+}
+
+function removeChosenCourse(courseNumber){
+    let chosenCourses = localStorage.getItem("chosenCourses");
+        if (chosenCourses === null){
+            return;
+        }
+        chosenCourses = JSON.parse(chosenCourses);
+        let index = -1;
+        for (let i = 0; i < chosenCourses.length; i++){
+            if (chosenCourses[i][courseNumber] !== undefined){
+                index = i;
+                break;
+            }
+        }
+        if (index !== -1){
+            chosenCourses.splice(index, 1);
+            localStorage.setItem("chosenCourses", JSON.stringify(chosenCourses));
+            displayChosenCourses();
+            window.location.href = window.location.href;
+        }
 }
 
 export function generateSchedules(){
     let parent = document.querySelector("#schedules");
     parent.innerHTML = "";
 
-    fetch("https://api.markarko.me/api/schedules")
+    console.log(localStorage.getItem("chosenCourses"));
+
+    fetch("http://localhost:8000/scheduler/schedules", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: localStorage.getItem("chosenCourses")
+        })
         .then(response => response.json())
         .then(json => {
             let schedules = json.data;
             if (schedules === null){
                 return;
             }
-            schedules.forEach(schedule => {
-                generateSchedule(schedule);
-            });
+            if (json.status === 200 || json.status === "OK"){
+                schedules.forEach(schedule => {
+                    generateSchedule(schedule);
+                });
+            } else {
+                document.querySelector("#message").textContent = json.error;
+            }    
         })
         .catch(error => console.log(error));
 }
@@ -169,8 +187,6 @@ export function generateSchedule(schedule){
     scheduleInfo.addEventListener("submit", (e) => {
         e.preventDefault();
         let scheduleInput = scheduleInfo.querySelector("input[type='hidden']").value;
-        console.log(scheduleInput);
-        console.log(JSON.parse(JSON.stringify(scheduleInput)));
         localStorage.setItem("schedule", scheduleInput);
         window.location.href = templatesLocation + scheduleTemplate;
     });
@@ -297,30 +313,31 @@ export function addEventListenersToForms(){
             }
             
             if (sections.length == 0){
-                alert("You must choose at least one section");
+                document.querySelector("#message").textContent = "You must choose at least one section";
                 return;
             }
 
             let chosenCourse = {};
             chosenCourse[courseNumber] = sections;
-            console.log(chosenCourse);
+            let chosenCourses = localStorage.getItem("chosenCourses");
 
-            fetch("https://api.markarko.me/api/courses/add", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(chosenCourse)
-            })
-                .then(response => response.json())
-                .then(json => {
-                    if (json.status == 201){
-                        displayChosenCourses();
-                    } else {
-                        alert(json.error);
+            if (chosenCourses === null){
+                chosenCourses = [];
+                chosenCourses.push(chosenCourse);
+                localStorage.setItem("chosenCourses", JSON.stringify(chosenCourses));
+            } else {
+                let newChosenCourses = JSON.parse(chosenCourses);
+                for (let chosenCourse of newChosenCourses){
+                    if (chosenCourse[courseNumber] !== undefined){
+                        document.querySelector("#message").textContent = "this course is already chosen";
+                        return;
                     }
-                })
-                .catch(error => console.log(error));
+                }
+                newChosenCourses.push(chosenCourse);
+                localStorage.setItem("chosenCourses", JSON.stringify(newChosenCourses));
+            }
+
+            displayChosenCourses();
             clearResults();
         });
     }

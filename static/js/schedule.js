@@ -1,4 +1,4 @@
-import { displayChosenCourses, displaySchedule } from "./utilities.js";
+import { displaySchedule } from "./utilities.js";
 
 displaySchedule();
 
