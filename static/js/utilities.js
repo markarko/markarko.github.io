@@ -94,6 +94,7 @@ export function generateSchedules(){
         .then(json => {
             let schedules = json.data;
             if (schedules === null){
+                document.querySelector("#message").textContent = "No possible schedules";
                 return;
             }
             if (json.status === 200 || json.status === "OK"){

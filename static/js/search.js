@@ -2,6 +2,7 @@ import {displayChosenCourses, createCourseContainer, addEventListenersToForms} f
 
 displayChosenCourses(true);
 
+document.querySelector("#help").addEventListener("click", displayHelpInfo);
 document.querySelector("form").addEventListener("submit", (e) => {
     e.preventDefault();
     document.querySelector("#message").textContent = "";
@@ -25,4 +26,8 @@ document.querySelector("form").addEventListener("submit", (e) => {
 function clearResults(){
     let parent = document.querySelector("#results");
     parent.innerHTML = "";
+}
+
+function displayHelpInfo(){
+    document.querySelector("#message").innerText = "You can enter a full or partial course number \n Example: 420-420-DW, 603-102, 345, MQ \n Leave the input blank if you wish to see all courses";
 }
