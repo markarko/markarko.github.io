@@ -81,8 +81,6 @@ export function generateSchedules(){
     let parent = document.querySelector("#schedules");
     parent.innerHTML = "";
 
-    console.log(localStorage.getItem("chosenCourses"));
-
     fetch("https://api.markarko.me/scheduler/schedules", {
             method: "POST",
             headers: {
@@ -93,7 +91,7 @@ export function generateSchedules(){
         .then(response => response.json())
         .then(json => {
             let schedules = json.data;
-            if (schedules === null){
+            if (schedules === null || schedules === undefined){
                 document.querySelector("#message").textContent = "No possible schedules";
                 return;
             }
