@@ -1,0 +1,15 @@
+.SelectedCourse {
+    width: fit-content;
+    padding: 0 0.75rem;
+}
+
+.SelectedCourses {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    position: sticky;
+    top: 102px;
+    background-color: white;
+    z-index: 1;
+    padding-bottom: 2rem;
+}

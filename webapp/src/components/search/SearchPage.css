@@ -1,0 +1,8 @@
+.SearchPage {
+    display: flex;
+    flex-direction: column;
+    flex: 6;
+    padding: 0 2rem;
+    margin-top: 0;
+    padding-top: 0;
+}
