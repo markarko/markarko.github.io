@@ -1,0 +1,14 @@
+.control {
+    /* &[data-inactive] {
+        opacity: 0;
+        cursor: default;
+    } */
+}
+
+.control > :last-child > :first-child {
+    margin-left: -100px;
+}
+
+.control > :last-child > :last-child {
+    margin-right: -100px;
+}
