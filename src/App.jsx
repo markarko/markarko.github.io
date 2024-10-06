@@ -7,6 +7,7 @@ import React from 'react';
 import { NavbarItem } from './components/Navbar/Navbar';
 import SchedulesPage from './components/schedules/SchedulesPage';
 import SavedSchedulesPage from './components/saved/SavedSchedulesPage';
+import { ToastContainer, toast } from 'react-toastify';
 
 const theme = createTheme({
   colors: {
@@ -85,11 +86,12 @@ export default function App() {
     <div className={classes.App}>
       <Navbar activePage={activePage} setActivePage={setActivePage}/>
       { pages[activePage] }
+      <ToastContainer />
     </div>
   </MantineProvider>
 }
 
-function fetchSchedules(setSchedules, body) {
+function fetchSchedules(setSchedules, body, ) {
   fetch("http://localhost:8000/scheduler/schedules", {
     method: "POST",
     headers: {
@@ -103,5 +105,8 @@ function fetchSchedules(setSchedules, body) {
   })
   .catch(error => {
     setSchedules([]);
+    toast.error("We are having technical issues. Please try again later", {
+      autoClose: 2000
+    })
   });
 }
