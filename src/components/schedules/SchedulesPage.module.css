@@ -1,0 +1,34 @@
+.SchedulesPage {
+    flex: 6;
+    display: flex;
+    flex-direction: column;
+    padding: 0 30px 30px 30px;
+}
+
+.SelectedCourses {
+    padding-top: 30px; 
+}
+
+.Filters {
+    background-color: white;
+    z-index: 1;
+    position: sticky;
+    top: 0px;
+    display: flex;
+    align-items: center;
+}
+
+.Filters > :first-child{
+    flex: 5;
+}
+
+.Filters > :last-child{
+    flex: 1;
+}
+
+.Zoom {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+

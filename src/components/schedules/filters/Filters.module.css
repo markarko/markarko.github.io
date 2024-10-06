@@ -1,0 +1,58 @@
+.Filters {
+    width: 300px;
+    background-color: #07254a;
+    color: white;    
+    border-radius: 15px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.GeneralStartEndTime {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.GeneralStartEndTimeSelector {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.indicator {
+    background-image: linear-gradient(
+        to right,
+        #07254a,
+        #4a7d8a
+    );
+}
+
+.control {
+    &::before {
+        display: none;
+    }
+}
+
+.label {
+    &,
+    &:hover {
+        &[data-active] {
+        color: var(--mantine-color-white);
+        }
+    }
+}
+
+.Heading {
+    margin: 0;
+    text-align: center;
+}
+
+.HR {
+    background-color: white;
+    width: 100%;
+    height: 3px;
+    margin-bottom: 0;
+}

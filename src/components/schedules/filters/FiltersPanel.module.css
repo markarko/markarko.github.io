@@ -1,0 +1,29 @@
+.filterPanel {
+    position: fixed;
+    top: 25%;
+    right: -300px;
+    width: 300px;
+    height: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+  
+.filterPanel.open {
+    transform: translateX(-350px);
+}
+
+.toggleButton {
+    padding: 10px 20px;
+    background-color: #07254a;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 20px 0 0 -100px;
+}
+  
+.panelContent {
+    width: 100%;
+}
+  
